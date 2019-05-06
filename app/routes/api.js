@@ -1,20 +1,14 @@
 module.exports = function(app) {
 	var Web3 = require('web3')
-		bcrypt = require('bcrypt'),
-		Cryptr = require('cryptr'),
 		BigNumber = require('bignumber.js'),
-		net = require('net'),
 		Tx = require('ethereumjs-tx'),
-		stripHexPrefix = require('strip-hex-prefix'),
-		ethereum_address = require('ethereum-address'),
-		svWriter = require('csv-write-stream');
-
-	var cryptr = new Cryptr('SimmitriBlockchain');
-	var client = new net.Socket();
+		stripHexPrefix = require('strip-hex-prefix');
 
 	/* Web3 Initialization */
-	//var web3 = new Web3(new Web3.providers.IpcProvider(app.web3.provider, client));
-	var web3 = new Web3(new Web3.providers.HttpProvider(app.web3.provider)); // Using Infura
+	const { WebsocketProvider } = Web3.providers
+     const provider = new WebsocketProvider(app.web3.provider)
+     
+     var web3 = new Web3(provider); // Using Infura
 
 	/* Contract initialization */
 	var contractObj = new web3.eth.Contract(app.contract.abi, app.contract.address);
@@ -57,7 +51,7 @@ module.exports = function(app) {
 			gasPrice: web3.utils.toHex(gasPrice),
 			gasLimit: web3.utils.toHex(400000),
 			from: app.dist.address,
-			to: contractObj._address,
+			to: app.contract.owner_address,
 			value: '0x00',
 			chainId: app.chainId,
 			data: txData

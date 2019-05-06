@@ -2,7 +2,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 
 // Config
-var config = require("./config/setting.js");
+var config = require("./config/dev.js");
 
 var app = express();
 
@@ -18,12 +18,8 @@ app.contract.password = config.contract.password;
 app.contract.decimals = config.contract.decimals;
 
 // Distribute configuration
-app.dist = {};
-app.dist.address = config.dist.address;
-app.dist.privateKey = config.dist.privateKey;
-// Bot configuration
-app.bot1 = config.bot1;
-app.bot2 = config.bot2;
+app.dist = config.dist
+
 // Chain ID configuration
 app.chainId = config.chainId;
 
