@@ -1,6 +1,6 @@
 node_modules
 .DS_Store
-config/setting.js
+config/*.js
 *.pem
 info.md
 package-lock.json
