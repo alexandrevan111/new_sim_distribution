@@ -3,8 +3,6 @@ var express = require('express');
 
 // Config
 var config = require("./config/live.js");
-console.log(config)
-
 var app = express();
 
 // Web3 configuration

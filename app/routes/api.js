@@ -22,6 +22,8 @@ module.exports = function(app) {
 
 	/* Transfer */
 	app.post('/transfer', async function(req, res){
+		console.log('coming...')
+		
 		if(!hasRights(req))
 			return res.send({status: false, msg: 'you are not authorized!'});
 
