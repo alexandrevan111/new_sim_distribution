@@ -29,7 +29,7 @@ module.exports = function(app) {
 			return res.send({status: false, msg: 'invalid parameters!'});
 
 		var address = req.body.address;
-		var tokenAmount = new BigNumber(req.body.tokenAmount * Math.pow(10, app.contract.decimals));
+		//var tokenAmount = '"' + (req.body.tokenAmount * Math.pow(10, app.contract.decimals)) + '"'
 
 		var privateKeyString = stripHexPrefix(app.dist.privateKey);
 		var privateKey = new Buffer(privateKeyString, 'hex');
@@ -45,13 +45,13 @@ module.exports = function(app) {
 
 		nonceGlobal = nonce;
 
-		var txData = contractObj.methods.transfer(address, tokenAmount).encodeABI();
+		var txData = contractObj.methods.transfer(address, '23270000000000000000').encodeABI();
 		var txParams = {
 			nonce: web3.utils.toHex(nonce),
 			gasPrice: web3.utils.toHex(gasPrice),
 			gasLimit: web3.utils.toHex(400000),
 			from: app.dist.address,
-			to: app.contract.owner_address,
+			to: app.contract.address,
 			value: '0x00',
 			chainId: app.chainId,
 			data: txData

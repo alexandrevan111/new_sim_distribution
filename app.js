@@ -2,7 +2,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 
 // Config
-var config = require("./config/dev.js");
+var config = require("./config/live.js");
 
 var app = express();
 
