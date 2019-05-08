@@ -22,8 +22,6 @@ module.exports = function(app) {
 
 	/* Transfer */
 	app.post('/transfer', async function(req, res){
-		console.log('coming...')
-		
 		if(!hasRights(req))
 			return res.send({status: false, msg: 'you are not authorized!'});
 
@@ -32,6 +30,8 @@ module.exports = function(app) {
 
 		var address = req.body.address;
 		//var tokenAmount = '"' + (req.body.tokenAmount * Math.pow(10, app.contract.decimals)) + '"'
+		var adjusted = parseInt(req.body.tokenAmount)
+		var tokenAmount = adjusted.toString() + "000000000000000000"
 
 		var privateKeyString = stripHexPrefix(app.dist.privateKey);
 		var privateKey = new Buffer(privateKeyString, 'hex');
@@ -47,7 +47,7 @@ module.exports = function(app) {
 
 		nonceGlobal = nonce;
 
-		var txData = contractObj.methods.transfer(address, '23270000000000000000').encodeABI();
+		var txData = contractObj.methods.transfer(address, tokenAmount).encodeABI();
 		var txParams = {
 			nonce: web3.utils.toHex(nonce),
 			gasPrice: web3.utils.toHex(gasPrice),
